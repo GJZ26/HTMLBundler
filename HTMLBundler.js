@@ -1,7 +1,9 @@
 import { argv } from 'node:process';
 
 const OPTION = { help: ["--help", "-h"], lang: ["--español", "-es", "--english", "-en"], version: ["--version", "-v"] }
-const VERSION = "v.2.0.0-dev"
+const VERSION = "v.2.0.1-dev"
+
+let LANG = "EN"
 
 const InFILE = argv.lastIndexOf("-i")
 const OutFILE = argv.lastIndexOf("-o")
@@ -9,25 +11,24 @@ const OutFILE = argv.lastIndexOf("-o")
 const INFO = {
     EN: {
         help: "\nHTMLBundler.js [LANG] [INFO] [-i = INPUT FILE] [-o = OUTPUT FILE]\n\tLANG:\n\t--español, -es : Displays information, errors and manuals in Spanish.\n\t--english, -en : Displays information, errors and manuals in English.\n\tDefault: English\n\n\tINFO:\n\t--version, -v : Displays the current version of the program.\n\t--help, -h : Displays this help message.\n\n\tINPUT FILE : The name of your original HTML file.\n\t-i : Declare incoming file\n\n\tOUTPUT FILE : Name of your bundle HTML file.\n\t-o : Declare outgoing file\n",
-        argumentError: "Too many arguments",
+        manyArgument: "Too many arguments",
         flagMissing: "Invalid arguments\nExpected: [-i = INPUT FILE] [-o = OUTPUT FILE]",
         hint: 'Type "HTMLBundler.js --help" to know more.',
         noOptionGiven: "No argument given\nMinimum expected: HTMLBundler.js [-i = INPUT FILE] [-o = OUTPUT FILE]",
         fileNotAssigned: "The options [-i] [-o] require a valid file\nExpected: [-i = INPUT FILE] [-o = OUTPUT FILE]",
-        sameName:"The outgoing file name cannot be the same as the incoming file name."
+        sameName:"The outgoing file name cannot be the same as the incoming file."
     },
     ES: {
         help: "\nHTMLBundler.js [IDIOMA] [INFO] [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]\n\tIDIOMA:\n\t--español, -es : Muestra la información, errores y manuales en Español.\n\t--english, -en : Muestra la información, errores y manuales en Inglés.\n\tDefault: English\n\n\tINFO:\n\t--version, -v : Muestra la versión actual del programa.\n\t--help, -h : Muestra este mensaje de ayuda.\n\n\tARCHIVO ENTRANTE : Nombre de tu archivo HTML original.\n\t-i : Declara el archivo entrante\n\n\tARCHIVO SALIENTE : Nombre de tu archivo HTML empaquetado.\n\t-o : Declara el archivo saliente\n",
-        argumentError: "Demasiados argumentos",
+        manyArgument: "Demasiados argumentos",
         flagMissing: "Argumentos inválidos\nSe esperaba: [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]",
         hint: 'Escribe "HTMLBundler.js --help" para conocer sus usos.',
         noOptionGiven: "Ningún argumento dado\nSe espera mínimo: HTMLBundler.js [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]",
         fileNotAssigned: "Las opciones [-i] [-o] necesitan un archivo válido\nSe esperaba: [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]",
-        sameName:"El nombre del archivo de saliente no puede ser el mismo del archivo entrante."
+        sameName:"El nombre del archivo saliente no puede ser el mismo del archivo entrante."
     }
 }
 
-let LANG = "EN"
 
 if (argv.length == 2) {
     console.error(new SyntaxError(INFO[LANG]["noOptionGiven"]))
@@ -41,7 +42,7 @@ if (OPTION["lang"].includes(argv[2]))
 
 
 if (argv.length - 2 > 5) {
-    console.error(new SyntaxError(INFO[LANG]["argumentError"]))
+    console.error(new SyntaxError(INFO[LANG]["manyArgument"]))
     console.info(INFO[LANG]["hint"])
     process.exit(1)
 }
