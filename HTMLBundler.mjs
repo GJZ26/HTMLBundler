@@ -1,9 +1,19 @@
 import { argv } from 'node:process';
+import fs from 'fs'
 
 const OPTION = { help: ["--help", "-h"], lang: ["--español", "-es", "--english", "-en"], version: ["--version", "-v"] }
 const VERSION = "v.2.0.1-dev"
+const CLASSESANDIDNAMES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+let onClass = 0
 let LANG = "EN"
+
+let HTMLfile = null
+const CSSfile = []
+const JSfile = []
+const ClassesName = {}
+const IDName = {}
+const minifiedHTML = ["<!-- Compress by HTMLBundlerJS -->"]
 
 const InFILE = argv.lastIndexOf("-i")
 const OutFILE = argv.lastIndexOf("-o")
@@ -16,7 +26,8 @@ const INFO = {
         hint: 'Type "HTMLBundler.js --help" to know more.',
         noOptionGiven: "No argument given\nMinimum expected: HTMLBundler.js [-i = INPUT FILE] [-o = OUTPUT FILE]",
         fileNotAssigned: "The options [-i] [-o] require a valid file\nExpected: [-i = INPUT FILE] [-o = OUTPUT FILE]",
-        sameName:"The outgoing file name cannot be the same as the incoming file."
+        sameName: "The outgoing file name cannot be the same as the incoming file.",
+        fileNotFound: "Could not open file:"
     },
     ES: {
         help: "\nHTMLBundler.js [IDIOMA] [INFO] [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]\n\tIDIOMA:\n\t--español, -es : Muestra la información, errores y manuales en Español.\n\t--english, -en : Muestra la información, errores y manuales en Inglés.\n\tDefault: English\n\n\tINFO:\n\t--version, -v : Muestra la versión actual del programa.\n\t--help, -h : Muestra este mensaje de ayuda.\n\n\tARCHIVO ENTRANTE : Nombre de tu archivo HTML original.\n\t-i : Declara el archivo entrante\n\n\tARCHIVO SALIENTE : Nombre de tu archivo HTML empaquetado.\n\t-o : Declara el archivo saliente\n",
@@ -25,10 +36,12 @@ const INFO = {
         hint: 'Escribe "HTMLBundler.js --help" para conocer sus usos.',
         noOptionGiven: "Ningún argumento dado\nSe espera mínimo: HTMLBundler.js [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]",
         fileNotAssigned: "Las opciones [-i] [-o] necesitan un archivo válido\nSe esperaba: [-i = ARCHIVO ENTRANTE] [-o = ARCHIVO SALIENTE]",
-        sameName:"El nombre del archivo saliente no puede ser el mismo del archivo entrante."
+        sameName: "El nombre del archivo saliente no puede ser el mismo del archivo entrante.",
+        fileNotFound: "No se ha podido abrir el archivo:"
     }
 }
 
+/* CHECKING ARGUMENTS */
 
 if (argv.length == 2) {
     console.error(new SyntaxError(INFO[LANG]["noOptionGiven"]))
@@ -69,8 +82,58 @@ if (((!argv[OutFILE + 1] || !argv[InFILE + 1])) || (!argv[OutFILE + 1].includes(
     process.exit(1)
 }
 
-if (argv[OutFILE + 1] == argv[InFILE + 1]){
+if (argv[OutFILE + 1] == argv[InFILE + 1]) {
     console.error(new Error(INFO[LANG]["sameName"]))
     console.info(INFO[LANG]["hint"])
     process.exit(1)
 }
+
+/* READING DOCUMENTS */
+try {
+    HTMLfile = (fs.readFileSync(argv[InFILE + 1], { encoding: 'utf8', flag: 'r' })).split("\n")
+} catch (e) {
+    console.error(new Error(`${INFO[LANG]["fileNotFound"]} ${argv[InFILE + 1]}`))
+    console.info(INFO[LANG]["hint"])
+    process.exit(1)
+}
+
+HTMLfile.map((line) => {
+
+    if (line.trim() == "") {
+        return
+    }
+
+    let currentLine = line
+        .trim()
+        .split("  ")
+        .join(" ")
+        .replace('< ', '<')
+        .replace(' >', '>')
+        .replace("= ", "=")
+        .replace(" =", "=")
+
+    let splitByCom = currentLine.split('"')
+
+    splitByCom.map((segment, index) => {
+
+        if (segment.includes("class=")) {
+            splitByCom[index + 1].split(" ").map((clazz) => {
+                ClassesName[CLASSESANDIDNAMES[onClass++]] = clazz
+            })
+        }
+
+        if (segment.includes("id=")) {
+            splitByCom[index + 1].split(" ").map((clazz) => {
+                IDName[CLASSESANDIDNAMES[onClass++]] = clazz
+            })
+        }
+
+    })
+
+    minifiedHTML.push(currentLine)
+
+})
+
+// console.log(minifiedHTML)
+console.log(ClassesName)
+console.log(IDName)
