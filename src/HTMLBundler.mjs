@@ -1,15 +1,17 @@
 import { argv } from 'node:process';
 import Validator from './ArgumentValidator.mjs';
 import FileManager from './FileManager.mjs';
-import Minifier from './Minifier.mjs';
+import Bundlier from './Bundlier.mjs';
 
 const fm = new FileManager()
-const min = new Minifier()
-
 const data = new Validator(argv)
-
 const HTMLRaw = fm.readFile(data.InFilePath, data.LANG)
+const bun = new Bundlier(HTMLRaw)
 
+// console.log(bun.HTMLInfo)
+// console.log(bun.HTMLMinified)
+console.log(bun.ClassList)
+console.log(bun.IDList)
 
 /* READING DOCUMENTS */
 
@@ -21,13 +23,13 @@ const HTMLRaw = fm.readFile(data.InFilePath, data.LANG)
 //     }
 
 //     let currentLine = line
-//         .trim()
-//         .split("  ")
-//         .join(" ")
-//         .replace('< ', '<')
-//         .replace(' >', '>')
-//         .replace("= ", "=")
-//         .replace(" =", "=")
+        // .trim()
+        // .split("  ")
+        // .join(" ")
+        // .replace('< ', '<')
+        // .replace(' >', '>')
+        // .replace("= ", "=")
+        // .replace(" =", "=")
 
 //     let splitByCom = currentLine.split('"')
 
