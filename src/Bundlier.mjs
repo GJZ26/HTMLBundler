@@ -50,7 +50,6 @@ export default class Bundlier {
             if (currentLine) {
 
                 currentLine = this.superTrim(currentLine)
-
                 currentLine = currentLine.split('"')
                 currentLine = currentLine.map((segment, index, result) => {
 
@@ -78,30 +77,27 @@ export default class Bundlier {
     }
 
     /**
-     * 
-     * @param {String} s Palabra a la cual se le eliminará espacios al final y dobles espacio
+     * This method removes the repeated spaces, and those at the end and beginning of the given String.
+     * @param {String} s String to eliminate spaces
+     * @returns String of the given parameter without duplicated spaces
      */
     superTrim(s) {
 
-        let result = s.trim().split("")
+        let result = s.trim().split("").filter((segment, index, incoming) => {
 
-        for (let i = 0; i < result.length; i++) {
-
-            if ((result[i] == "<" && result[i + 1] == " ") ||
-                (result[i] == "" && result[i + 1] == " ") ||
-                (result[i] == " " && result[i + 1] == " ") ||
-                (result[i] == "=" && result[i + 1] == " ")
-            ) {
-                result[i + 1] = ""
+            if ((segment == " " && (incoming[index + 1] == " " || incoming[index + 1] == "=" || incoming[index + 1] == "<" || incoming[index + 1] == ">"))) {
+                return
             }
 
-            if ((result[i] == ">" && (result[i-1] == " " && result[i+1]!= "")) ||
-                (result[i] == "=" && (result[i-1] == " " && result[i+1]!= "")) ||
-                (result[i] == "" && (result[i-1] == " " && result[i+1]!= ""))) {
-                result[i - 1] = ""
-            }
+            return segment
+        })
 
-        }
+        result = result.filter((segment,index, incoming)=>{
+            if(segment==" " && (incoming[index-1] == "=")){
+                return
+            }
+            return segment
+        })
 
         return result.join("")
     }

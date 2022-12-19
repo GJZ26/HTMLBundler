@@ -2,13 +2,15 @@ import { argv } from 'node:process';
 import Validator from './ArgumentValidator.mjs';
 import FileManager from './FileManager.mjs';
 import Bundlier from './Bundlier.mjs';
+import { writeFileSync } from 'node:fs';
 
 const fm = new FileManager()
 const data = new Validator(argv)
 const HTMLRaw = fm.readFile(data.InFilePath, data.LANG)
 const bun = new Bundlier(HTMLRaw)
 
-console.log(bun.HTMLMinified)
+
+// writeFileSync(data.OutFilePath,bun.HTMLMinified.join(""))
 /* READING DOCUMENTS */
 
 
