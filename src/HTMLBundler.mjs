@@ -9,6 +9,7 @@ const data = new Validator(argv)
 const HTMLRaw = fm.readFile(data.InFilePath, data.LANG)
 const bun = new Bundlier(HTMLRaw)
 
+console.log(bun.HTMLMinified)
 
 // writeFileSync(data.OutFilePath,bun.HTMLMinified.join(""))
 /* READING DOCUMENTS */

@@ -8,11 +8,12 @@ export default class Bundlier {
     IDList = {}
 
     HTMLInfo = null
-    HTMLMinified = ["<!-- Bundled by HTMLBundlerJS -->"]
+    HTMLMinified = []
 
     constructor(rawOrigin) {
         this.HTMLInfo = rawOrigin
         this.compressFile(this.HTMLInfo, this.HTMLMinified)
+        this.removeComments(this.HTMLMinified, this.HTMLMinified)
     }
 
     getId() {
@@ -92,14 +93,48 @@ export default class Bundlier {
             return segment
         })
 
-        result = result.filter((segment,index, incoming)=>{
-            if(segment==" " && (incoming[index-1] == "=")){
+        result = result.filter((segment, index, incoming) => {
+            if (segment == " " && (incoming[index - 1] == "=")) {
                 return
             }
             return segment
         })
 
         return result.join("")
+    }
+
+    /**
+     * 
+     * @param {String[]} info 
+     * @param {String[]} saveOn
+     */
+    removeComments(info, saveOn) {
+        let inComment = false
+
+        info = info.filter((segment) => {
+
+            if(segment.includes("<!--")){
+                inComment = true
+            }
+
+            if (inComment && segment.includes("-->")) {
+                inComment = false
+                return
+            }
+
+            if(inComment){
+                return
+            }
+
+            if(segment.includes("-->")){
+                inComment = false
+            }
+
+
+            return segment
+        })
+
+        saveOn.push(info)
     }
 
 }
