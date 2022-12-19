@@ -45,7 +45,7 @@ node ./HTMLBundler.js -es -i index.html -o index-bundled.html
 
 Lea esto en [Español](#html-bundler-js---es)
 
-Version: v 3.2.0-dev
+Version: v 3.3.0-dev
 
 **HTML Bundler Js** is intended to be a Node JS script to unify stylesheets and scripts into a single minified HTML file to distribute your static projects in a compact way and make them harder to read.
 

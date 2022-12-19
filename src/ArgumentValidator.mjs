@@ -1,7 +1,7 @@
 export default class Validator {
 
     _OPTION = { help: ["--help", "-h"], lang: ["--español", "-es", "--english", "-en"], version: ["--version", "-v"] }
-    _VERSION = "v.3.2.1-dev"
+    _VERSION = "v.3.3.0-dev"
 
     _args = null
     _InFileIndex = -1
