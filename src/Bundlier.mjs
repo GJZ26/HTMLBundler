@@ -49,14 +49,7 @@ export default class Bundlier {
 
             if (currentLine) {
 
-                currentLine = currentLine.trim()
-                    .split("  ")
-                    .join(" ")
-                    .replace('< ', '<')
-                    .replace(' >', '>')
-                    .replace(" = ", "=")
-                    .replace("= ", "=")
-                    .replace(" =", "=")
+                currentLine = this.superTrim(currentLine)
 
                 currentLine = currentLine.split('"')
                 currentLine = currentLine.map((segment, index, result) => {
@@ -64,25 +57,53 @@ export default class Bundlier {
                     if (segment.includes("class=")) {
                         result[index + 1] = result[index + 1].split(' ').map((clazz) => {
                             this.ClassList[clazz] = this.getId()
-                            return clazz.replace(clazz,this.ClassList[clazz])
+                            return clazz.replace(clazz, this.ClassList[clazz])
                         }).join(" ")
                     }
 
                     if (segment.includes("id=")) {
                         result[index + 1] = result[index + 1].split(' ').map((clazz) => {
                             this.IDList[clazz] = this.getId()
-                            return clazz.replace(clazz,this.IDList[clazz])
+                            return clazz.replace(clazz, this.IDList[clazz])
                         }).join(" ")
                     }
 
                     return result[index]
                 }).join('"')
 
-                console.log(currentLine)
                 saveOn.push(currentLine)
             }
 
         })
+    }
+
+    /**
+     * 
+     * @param {String} s Palabra a la cual se le eliminará espacios al final y dobles espacio
+     */
+    superTrim(s) {
+
+        let result = s.trim().split("")
+
+        for (let i = 0; i < result.length; i++) {
+
+            if ((result[i] == "<" && result[i + 1] == " ") ||
+                (result[i] == "" && result[i + 1] == " ") ||
+                (result[i] == " " && result[i + 1] == " ") ||
+                (result[i] == "=" && result[i + 1] == " ")
+            ) {
+                result[i + 1] = ""
+            }
+
+            if ((result[i] == ">" && (result[i-1] == " " && result[i+1]!= "")) ||
+                (result[i] == "=" && (result[i-1] == " " && result[i+1]!= "")) ||
+                (result[i] == "" && (result[i-1] == " " && result[i+1]!= ""))) {
+                result[i - 1] = ""
+            }
+
+        }
+
+        return result.join("")
     }
 
 }

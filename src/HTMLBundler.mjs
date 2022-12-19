@@ -8,11 +8,7 @@ const data = new Validator(argv)
 const HTMLRaw = fm.readFile(data.InFilePath, data.LANG)
 const bun = new Bundlier(HTMLRaw)
 
-// console.log(bun.HTMLInfo)
-// console.log(bun.HTMLMinified)
-console.log(bun.ClassList)
-console.log(bun.IDList)
-
+console.log(bun.HTMLMinified)
 /* READING DOCUMENTS */
 
 
