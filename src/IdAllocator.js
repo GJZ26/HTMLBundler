@@ -6,6 +6,8 @@ export default class IdAllocator {
     /**@type {Object} */
     Classes = {}
     IDS = {}
+    JSlinks = {}
+    CSSlinks = {}
 
     createTag(key, type) {
 
@@ -46,6 +48,12 @@ export default class IdAllocator {
             case "id":
                 this.IDS[key] = value
                 break;
+            case "js":
+                this.JSlinks[key] = value
+                break;
+            case "css":
+                this.CSSlinks[key] = value
+                break;
             default:
                 console.warn("No se asignado el tipo, o no aparece en el listados de tipos admitidos\nPuede que este index no se encunetre indexado en ninguna lista de identificadores")
         }
@@ -58,6 +66,10 @@ export default class IdAllocator {
                 return this.Classes[key]
             case "id":
                 return this.IDS[key]
+            case "js":
+                return this.JSlinks[key]
+            case "css":
+                return this.CSSlinks[key]
             default:
                 console.warn("No se asignado el tipo, o no aparece en el listados de tipos admitidos\nPuede que este index no se encunetre indexado en ninguna lista de identificadores")
         }
@@ -75,6 +87,20 @@ export default class IdAllocator {
         if (type == "id") {
             for (keys in this.IDS) {
                 if (this.IDS[key] == tag)
+                    return tag
+            }
+        }
+
+        if (type == "js") {
+            for (keys in this.JSlinks) {
+                if (this.JSlinks[key] == tag)
+                    return tag
+            }
+        }
+
+        if (type == "id") {
+            for (keys in this.CSSlinks) {
+                if (this.CSSlinks[key] == tag)
                     return tag
             }
         }
