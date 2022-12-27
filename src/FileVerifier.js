@@ -15,15 +15,11 @@ export default class FileManager {
 
     rootDir = null
 
-    constructor() {
-
-    }
-
     /**
-     * 
+     * Verifies that the given file exists, otherwise returns an error and terminates the program.
      * @param {String} path - Path to file to read
      * @param {String} lang - Language to show any error messages, default English
-     * @returns 
+     * @returns - Array of the given file
      */
     readFile(path, lang = "EN") {
 
@@ -40,10 +36,6 @@ export default class FileManager {
             console.info(this.MESSAGE[lang]["hint"])
             process.exit(1)
         }
-    }
-
-    getRD() {
-
     }
 
 }

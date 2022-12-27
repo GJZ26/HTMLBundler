@@ -1,4 +1,4 @@
-import data from './module-info.json' assert {"type":"json"}
+import data from './module-info.json' assert {"type": "json"}
 
 export default class Validator {
 
@@ -34,7 +34,6 @@ export default class Validator {
 
         this.InFilePath = this._args[this._InFileIndex + 1]
         this.OutFilePath = this._args[this._OutFileIndex + 1]
-
     }
 
     argsNumChecker() {
@@ -79,7 +78,6 @@ export default class Validator {
     }
 
     fileChecker() {
-
         if (((!this._args[this._OutFileIndex + 1] || !this._args[this._InFileIndex + 1])) || (!this._args[this._OutFileIndex + 1].includes(".html") || !this._args[this._InFileIndex + 1].includes(".html"))) {
             console.error(new SyntaxError(this.MESSAGES[this.LANG]["fileNotAssigned"]))
             console.info(this.MESSAGES[this.LANG]["hint"])
@@ -91,7 +89,6 @@ export default class Validator {
             console.info(this.MESSAGES[this.LANG]["hint"])
             process.exit(1)
         }
-
     }
 
 }

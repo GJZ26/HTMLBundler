@@ -1,5 +1,5 @@
 {
-    "version": "4.1.0-dev",
+    "version": "5.0.0-dev",
     "messages": {
         "EN": {
             "help": "\nHTMLBundler.js [LANG] [INFO] [-i = INPUT FILE] [-o = OUTPUT FILE]\n\tLANG:\n\t--español, -es : Displays information, errors and manuals in Spanish.\n\t--english, -en : Displays information, errors and manuals in English.\n\tDefault: English\n\n\tINFO:\n\t--version, -v : Displays the current version of the program.\n\t--help, -h : Displays this help message.\n\n\tINPUT FILE : The name of your original HTML file.\n\t-i : Declare incoming file\n\n\tOUTPUT FILE : Name of your bundle HTML file.\n\t-o : Declare outgoing file\n",

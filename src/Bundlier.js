@@ -1,3 +1,5 @@
+import IdAllocator from "./IdAllocator";
+
 export default class Bundlier {
 
     IdChar = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -12,33 +14,16 @@ export default class Bundlier {
     JSRecovery = []
     CSSRecovery = []
 
+    /**
+     * @deprecated Use HTMLCleaner instead
+     * @param {String[]} rawOrigin - file to load
+     */
     constructor(rawOrigin) {
         this.HTMLInfo = rawOrigin
         this.compressFile(this.HTMLInfo, this.HTMLMinified)
         this.HTMLMinified = this.removeComments(this.HTMLMinified)
         this.HTMLMinified = this.separateStyleSheet(this.HTMLMinified)
         this.HTMLMinified = this.separateScripts(this.HTMLMinified)
-    }
-
-    getId() {
-        let id = ""
-
-        for (let i = 0; i < this.IdRound; i++) {
-
-            if (this.Idlenght < this.IdChar.length - 1) {
-
-                this.Idlenght++
-                id = `${this.IdChar[this.IdRound - 1]}${this.IdChar[this.Idlenght]}`
-                continue;
-
-            }
-
-            this.Idlenght = 1
-            this.IdRound++
-
-        }
-
-        return id.trim();
     }
 
     /**

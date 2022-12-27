@@ -1,22 +1,15 @@
-import { argv } from 'node:process';
-import Validator from './ArgumentValidator.js';
-import FileManager from './FileManager.js';
-import Bundlier from './Bundlier.js';
+import { argv } from 'node:process'
 
-const fm = new FileManager()
-const data = new Validator(argv)
-const HTMLRaw = fm.readFile(data.InFilePath, data.LANG)
-const CSSRaw = {}
-const JSRaw = {}
-const bun = new Bundlier(HTMLRaw)
+import Validator from './ArgumentValidator.js'
+import FileManager from './FileVerifier.js'
+import IdAllocator from './IdAllocator.js'
+import Bundlier from './Bundlier.js'
 
-for (const k in bun.CSSRecovery) {
-    CSSRaw[bun.CSSRecovery[k]] = fm.readFile(fm.rootDir + k, data.LANG)
-}
+import HTMLCleaner from './HTMLCleaner.js'
 
-for (const k in bun.JSRecovery) {
-    JSRaw[bun.JSRecovery[k]] = fm.readFile(fm.rootDir + k, data.LANG)
-}
+const args = new Validator(argv)
+const file = new FileManager()
+const id = new IdAllocator()
+const a = new Bundlier()
 
-console.log(JSRaw)
-console.log(CSSRaw)
+const html = new HTMLCleaner()
