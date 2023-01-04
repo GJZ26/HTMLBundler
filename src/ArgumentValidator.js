@@ -1,6 +1,6 @@
 import data from './module-info.json' assert {"type": "json"}
 
-export default class Validator {
+export default class ArgumentValidator {
 
     _OPTION = { help: ["--help", "-h"], lang: ["--español", "-es", "--english", "-en"], version: ["--version", "-v"] }
     _VERSION = data.version
