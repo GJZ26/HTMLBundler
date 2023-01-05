@@ -36,6 +36,9 @@ export default class ArgumentValidator {
         this.OutFilePath = this._args[this._OutFileIndex + 1]
     }
 
+    /**
+     * Verifies the number of arguments given by the user
+     */
     argsNumChecker() {
         if (this._args.length == 2) {
             console.error(new SyntaxError(this.MESSAGES[this.LANG]["noOptionGiven"]))
@@ -50,11 +53,17 @@ export default class ArgumentValidator {
         }
     }
 
+    /**
+     * Assigns language
+     */
     setLang() {
         if (this._OPTION["lang"].includes(this._args[2]))
             this._OPTION["lang"].indexOf(this._args[2]) <= 1 ? this.LANG = "ES" : this.LANG = "EN"
     }
 
+    /**
+     * Show application manual
+     */
     showHelp() {
         if (this._args.some((v) => (this._OPTION["help"].includes(v)))) {
             console.info(this.MESSAGES[this.LANG]["help"])
@@ -62,6 +71,9 @@ export default class ArgumentValidator {
         }
     }
 
+    /**
+     * Show application version
+     */
     showVersion() {
         if (this._args.some((v) => (this._OPTION["version"].includes(v)))) {
             console.info(this._VERSION)
@@ -69,6 +81,9 @@ export default class ArgumentValidator {
         }
     }
 
+    /**
+     * Verify the input of given files
+     */
     IOFlagsChecker() {
         if (this._InFileIndex == -1 || this._OutFileIndex == -1) {
             console.error(new Error(this.MESSAGES[this.LANG]["flagMissing"]))
@@ -77,6 +92,9 @@ export default class ArgumentValidator {
         }
     }
 
+    /**
+     * Validate that the extension, name and location of input and output files are correct.
+     */
     fileChecker() {
         if (((!this._args[this._OutFileIndex + 1] || !this._args[this._InFileIndex + 1])) || (!this._args[this._OutFileIndex + 1].includes(".html") || !this._args[this._InFileIndex + 1].includes(".html"))) {
             console.error(new SyntaxError(this.MESSAGES[this.LANG]["fileNotAssigned"]))
