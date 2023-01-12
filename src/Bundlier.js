@@ -63,14 +63,17 @@ export default class Bundlier {
         this.CSSMeth = new CSSEnhancer()
         this.JSMeth = new JSEnhancer()
         this.fileMeth = new FileManager()
+
     }
 
     /**
      * Remove every unnecesary white spaces and comments for every linked file
      * or script.
-     */
+    */
     enhace() {
-        this.minFile = this.HTMLMeth.enhancer(this.rawHTML,this.idMemory)
+        this.openFile(this.inFile, "HTML")
+        this.minFile = this.HTMLMeth.enhancer(this.rawHTML, this.idMemory)
+        console.log(this.minFile)
     }
 
     /**
@@ -81,6 +84,14 @@ export default class Bundlier {
     openFile(path, type) {
         if (type == "HTML") {
             this.rawHTML = this.fileMeth.readFile(this.inFile, this.localLang)
+        }
+
+        if (type == "CSS") {
+            this.rawCSS = this.fileMeth.readFile(this.inFile, this.localLang)
+        }
+
+        if (type == "JS") {
+            this.rawJS = this.fileMeth.readFile(this.inFile, this.localLang)
         }
     }
 }
