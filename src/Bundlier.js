@@ -63,7 +63,7 @@ export default class Bundlier {
         this.CSSMeth = new CSSEnhancer()
         this.JSMeth = new JSEnhancer()
         this.fileMeth = new FileManager()
-
+        this.openFile(this.inFile, "HTML")
     }
 
     /**
@@ -71,9 +71,7 @@ export default class Bundlier {
      * or script.
     */
     enhace() {
-        this.openFile(this.inFile, "HTML")
         this.minFile = this.HTMLMeth.enhancer(this.rawHTML, this.idMemory)
-        console.log(this.minFile)
     }
 
     /**

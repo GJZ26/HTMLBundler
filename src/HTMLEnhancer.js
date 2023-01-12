@@ -50,8 +50,8 @@ export default class HTMLEnhancer {
 
     analyzer(file) {
         this.HTMLMin = this.removeComments(file)
-        // this.HTMLMin = this.getJS(file)
-        // this.HTMLMin = this.getCSS(file)
+        this.HTMLMin = this.getJS(file)
+        this.HTMLMin = this.getCSS(file)
     }
     
     superTrim(line) {
