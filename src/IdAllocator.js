@@ -55,7 +55,7 @@ export default class IdAllocator {
                 this.CSSlinks[key] = value
                 break;
             default:
-                console.warn("No se asignado el tipo, o no aparece en el listados de tipos admitidos\nPuede que este index no se encunetre indexado en ninguna lista de identificadores")
+                console.warn("No se asignado el tipo, o no aparece en el listados de tipos admitidos\nPuede que este index no se encuentre indexado en alguna lista de identificadores")
         }
         return value;
     }

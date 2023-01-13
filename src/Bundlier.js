@@ -72,6 +72,10 @@ export default class Bundlier {
     */
     enhace() {
         this.minFile = this.HTMLMeth.enhancer(this.rawHTML, this.idMemory)
+
+        this.openFile(this.idMemory.CSSlinks[0],"CSS")
+        console.log("A")
+
     }
 
     /**
@@ -85,11 +89,11 @@ export default class Bundlier {
         }
 
         if (type == "CSS") {
-            this.rawCSS = this.fileMeth.readFile(this.inFile, this.localLang)
+            this.rawCSS = this.fileMeth.readFile(path, this.localLang)
         }
 
         if (type == "JS") {
-            this.rawJS = this.fileMeth.readFile(this.inFile, this.localLang)
+            this.rawJS = this.fileMeth.readFile(path, this.localLang)
         }
     }
 }
